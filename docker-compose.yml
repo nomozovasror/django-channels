@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  redis:
+    image: redis:5
+    ports:
+      - "6379:6379"
+  web:
+    build: ../Django-channels
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ../Django-channels:/usr/src/Django-channels
+    ports:
+        - "8000:8000"
+    depends_on:
+        - redis
+    env_file:
+      - ../Django-channels/.env
